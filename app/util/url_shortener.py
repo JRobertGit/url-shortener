@@ -23,6 +23,15 @@ def validate_url(url):
     return re.match(URL_REGEX, url) is not None
 
 
+def validate_shortcode(shortcode):
+    if len(shortcode) == 0:
+        return False
+    for c in shortcode:
+        if not (c in ALPHABET):
+            return False
+    return True
+
+
 def shorten(id_value):
     if id_value == 0:
         return ALPHABET[0]
