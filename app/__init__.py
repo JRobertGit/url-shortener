@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from .config import config
 from .controllers.url_shortener import url_shortener_api
 
-from .models.models import db
+from .database.models import db
 
 migrate = Migrate()
 
