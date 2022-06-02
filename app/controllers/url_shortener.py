@@ -3,7 +3,7 @@ from flask import abort, Blueprint, jsonify, redirect, request
 
 from ..data_access.unit_of_work import SQLAlchemyUnitOfWork
 from ..database.models import db
-from ..util import url_shortener
+from ..util.url_shortener import validate_shortcode, validate_url
 
 uow = SQLAlchemyUnitOfWork(db.session)
 
@@ -19,6 +19,9 @@ def test():
 
 @url_shortener_api.route("/<route>", methods=["GET"])
 def redirect_to_url(route):
+    if not validate_shortcode(route):
+        return abort(404)
+
     sh_url = uow.shorteded_urls.get_by_shortcode(route)
 
     if not sh_url:
@@ -29,6 +32,9 @@ def redirect_to_url(route):
 
 @url_shortener_api.route("/api/shortener/<shortcode>", methods=["GET"])
 def get_shortened_url(shortcode):
+    if not validate_shortcode(shortcode):
+        return abort(404)
+
     sh_url = uow.shorteded_urls.get_by_shortcode(shortcode)
 
     if not sh_url:
@@ -44,7 +50,7 @@ def shorten_url():
     if not ("url" in data):
         return abort(400, "No URL provided")
 
-    if not url_shortener.validate_url(data["url"]):
+    if not validate_url(data["url"]):
         return abort(400, "Invalid URL provided")
 
     shortcode = uow.shorteded_urls.add(data["url"])
