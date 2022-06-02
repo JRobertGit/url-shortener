@@ -1,6 +1,7 @@
-from flask import abort, Blueprint, jsonify, request
-import random
+from flask import abort, Blueprint, jsonify, redirect, request
 
+
+from ..models.models import db, ShortenedURL
 from ..util import url_shortener
 
 
@@ -15,22 +16,37 @@ def test():
 
 @url_shortener_api.route("/<route>", methods=["GET"])
 def redirect_to_url(route):
-    return jsonify(route)
+    sh_url = db.session.query(ShortenedURL).filter_by(shortcode=route).first()
+    if not sh_url:
+        return abort(404)
+    return redirect(sh_url.url, 302)
 
 
 @url_shortener_api.route("/api/shortener/<shortcode>", methods=["GET"])
 def get_shortened_url(shortcode):
-    return jsonify(shortcode)
+    sh_url = (
+        db.session.query(ShortenedURL).filter_by(shortcode=shortcode).first()
+    )
+    if not sh_url:
+        return abort(404)
+    return jsonify(sh_url.url)
 
 
 @url_shortener_api.route("/api/shortener", methods=["POST"])
 def shorten_url():
     data = request.get_json()
+
     if not ("url" in data):
         return abort(400, "No URL provided")
+
     if not url_shortener.validate_url(data["url"]):
         return abort(400, "Invalid URL provided")
-    # TODO: Add Data Access Layer
-    id = random.randint(3000000, 10000000)
-    shortened_url = url_shortener.shorten(id)
-    return jsonify(shortened_url)
+
+    new_url = ShortenedURL(data["url"])
+    db.session.add(new_url)
+    db.session.flush()
+    shortcode = url_shortener.shorten(new_url.id)
+    new_url.shortcode = shortcode
+    db.session.commit()
+
+    return jsonify(shortcode)
