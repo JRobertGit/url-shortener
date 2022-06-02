@@ -30,7 +30,7 @@ class TEST(Config):
 class PROD(Config):
     DEBUG = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # SQLALCHEMY_DATABASE_URI = env_db
+    SQLALCHEMY_DATABASE_URI = env_db
 
 
-config = dict(dev=DEV, test=TEST, prod=PROD)
+config = dict(development=DEV, test=TEST, production=PROD)
