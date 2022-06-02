@@ -6,6 +6,20 @@ URL = "bdhd0"
 
 
 class TestURLShortener(unittest.TestCase):
+    def test_validate_url(self):
+        url = "https://www.example.com"
+        url_2 = "http://www.example.com"
+        url_3 = "http://example.com"
+        url_4 = "example.com"
+        url_5 = "http://example"
+        url_6 = "example"
+        self.assertEqual(url_shortener.validate_url(url), True)
+        self.assertEqual(url_shortener.validate_url(url_2), True)
+        self.assertEqual(url_shortener.validate_url(url_3), True)
+        self.assertEqual(url_shortener.validate_url(url_4), False)
+        self.assertEqual(url_shortener.validate_url(url_5), False)
+        self.assertEqual(url_shortener.validate_url(url_6), False)
+
     def test_shorten_zero(self):
         url = url_shortener.shorten(0)
         self.assertEqual(url, "a")
