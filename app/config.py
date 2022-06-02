@@ -1,8 +1,10 @@
 import os
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-env_db = os.getenv("DATABASE_URL")
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DEFAULT_DB = "sqlite:///" + os.path.join(
+    BASE_DIR, "database/shortened_urls.db"
+)
+ENV_DB = os.getenv("DATABASE_URL") or DEFAULT_DB
 
 
 class Config:
@@ -11,26 +13,14 @@ class Config:
 
 class DEV(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(
-        basedir, "database/shortened_urls.db"
-    )
+    SQLALCHEMY_DATABASE_URI = DEFAULT_DB
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-
-class TEST(Config):
-    DEBUG = True
-    PRESERVE_CONTEXT_ON_EXCEPTION = False
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(
-        basedir, "database/shortened_urls.db"
-    )
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    TESTING = True
 
 
 class PROD(Config):
     DEBUG = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = env_db
+    SQLALCHEMY_DATABASE_URI = ENV_DB
 
 
-config = dict(development=DEV, test=TEST, production=PROD)
+config = dict(development=DEV, production=PROD)
