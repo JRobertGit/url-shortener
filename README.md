@@ -61,11 +61,27 @@ This will start the application over [127.0.0.1:5000/](127.0.0.1:5000/)
 # API Usage
 URL Shortener API supports the following routes and operations:
 ```
+# API Test Route
 GET     localhost:5000/
-GET     localhost:5000/<route>
+
+# Will decode the shortened URL and redirect to the original URL
+GET     localhost:5000/<shortcode>
+
+# Will create and return a new shortcode a provided URL
 POST    localhost:5000/api/shortener
+
+# Will return the original URL string given the shortcode identifier
 GET     localhost:5000/api/shortener/<shortcode>
 ```
+- GET     `localhost:5000/`
+![get_index](./images/get_index.png)
+- GET `localhost:5000/<shortcode>`
+![redirect](./images/redirect.png)
+- POST    `localhost:5000/api/shortener`
+![create](./images/create.png)
+- GET     `localhost:5000/api/shortener/<shortcode>`
+![get_shortcode](./images/get_shortcode.png)
+
 
 # Run as Container
 The docker file to create the image to run the app as a container is straight forward. It adds some automation to the set up, and takes care of the dependencies, requirements and environment.
