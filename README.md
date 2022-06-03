@@ -1,5 +1,23 @@
 # URL Shortener Test (Solution)
 The aplication is currently deployed on AWS [here](https://url-shortener.67m0udk2mli12.us-east-1.cs.amazonlightsail.com/). Please read the documentation for usage.
+
+![aws](./images/aws.png)
+
+## Development Best Practices
+For the developmet of the project there are a couple best practices. To follow:
+
+### Git, Commits and PRs
+Along the progres and development of the project, git flow has been used as well as a PR template to keep consistency and clarity of the commits and code merges.
+- [Commits](https://github.com/JRobertGit/url-shortener/commits/master)
+- [Pull Requests](https://github.com/JRobertGit/url-shortener/pulls?q=is%3Apr+is%3Aclosed)
+
+![commits](./images/commits.png)
+
+![pr](./images/pull_request.png)
+
+### Code Style and Pre-commit
+- The project uses black code formater and flake8 to mantain code style consistency across all modules. For this we use modules `black` and `flake8`.
+- Before any commit can be done, a `pre-commit` hook is run to ensure style and code format is repected. For this we use the `pre-commit` module.
 ## Requirements & Development Setup
 
 - Python 3.9
@@ -38,6 +56,7 @@ To run the project on localhost:
 This will start the application over [127.0.0.1:5000/](127.0.0.1:5000/)
 
 ![flask_run](./images/flask_run.png)
+![running](./images/running.png)
 
 # API Usage
 URL Shortener API supports the following routes and operations:
