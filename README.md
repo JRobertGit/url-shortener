@@ -1,5 +1,5 @@
 # URL Shortener Test (Solution)
-The aplication is currently deployed on AWS [here](https://url-shortener.67m0udk2mli12.us-east-1.cs.amazonlightsail.com/). Please read the documentation for usage.
+The aplication is currently deployed on AWS Lightsail container service [here](https://url-shortener.67m0udk2mli12.us-east-1.cs.amazonlightsail.com/). Please read the documentation for usage.
 
 ![aws](./images/aws.png)
 
@@ -110,4 +110,8 @@ docker run -d -p 5000:5000 --name url_shortener <image_sha>
 # Design
 The application was design taking into consideration the low complexity requirements. Many sugar coated and more complex libraries were not used (like `Flask-RESTful`) to keep the application simple.
 
-The application is a simple `Flask API`. So the project is structured according to that. On `./app/controllers` we'll find API related controllers that define the aplication's enpoints that use templates.
+The application is a simple `Flask API` with access to a small `SQLite` local database. So the project is structured according to that.
+- `./app/util/url_shortener.py` holds the implementation of the actual URL shortener which is based on one of the siplest ways to address the problem, which is a mathematical change in base using the `id` integer of the URL record inserted. This allow us to represent a big space of URL, and hardly running out of `shortcodes` to encode big URLS.
+- On `./app/controllers` we'll find API related controllers that define the aplication's enpoints that use templates.
+- A data access layer was added under `./app/data_access` to abstract most of the complexity behind `SQLAlchemy` session.
+- For models there's nothing much to mention. the `./app/database/models.py` holds the `db` object as well as the definition of the unique entity model `ShortenedURL`.
