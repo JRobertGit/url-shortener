@@ -56,7 +56,6 @@ To run the project on localhost:
 This will start the application over [127.0.0.1:5000/](127.0.0.1:5000/)
 
 ![flask_run](./images/flask_run.png)
-![running](./images/running.png)
 
 # API Usage
 URL Shortener API supports the following routes and operations:
@@ -73,18 +72,18 @@ POST    localhost:5000/api/shortener
 # Will return the original URL string given the shortcode identifier
 GET     localhost:5000/api/shortener/<shortcode>
 ```
-- GET     `localhost:5000/`
+#### GET     `localhost:5000/`
 ![get_index](./images/get_index.png)
-- GET `localhost:5000/<shortcode>`
+#### GET `localhost:5000/<shortcode>`
 ![redirect](./images/redirect.png)
-- POST    `localhost:5000/api/shortener`
+#### POST    `localhost:5000/api/shortener`
 ![create](./images/create.png)
-- GET     `localhost:5000/api/shortener/<shortcode>`
+#### GET     `localhost:5000/api/shortener/<shortcode>`
 ![get_shortcode](./images/get_shortcode.png)
 
 
 # Run as Container
-The docker file to create the image to run the app as a container is straight forward. It adds some automation to the set up, and takes care of the dependencies, requirements and environment.
+The docker file to create the image to run the app as a container is straight forward. It adds some automation to the set up, and takes care of the dependencies, requirements and environment. You can find the latest published image [here](https://hub.docker.com/layers/226683513/jroberto2991/url_shortener/latest/images/sha256-5fdfa6d046c9dbaba77963425954f5a16bc8e74492db1dad0a7ab5776d9f00c9?context=repo).
 ```Dockerfile
 FROM python:3.9.13-slim-buster
 WORKDIR /url_shortener
